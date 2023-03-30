@@ -1,0 +1,7 @@
+---
+- name: Install applications using apt
+  become: true
+  apt:
+    name: ["tmux", "fzf", "jq", "xclip", "googler"]
+  tags:
+    - install

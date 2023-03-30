@@ -1,0 +1,17 @@
+- hosts: localhost
+  # become: true # this runs this entire play as sudo
+  pre_tasks:
+    - name: Update Apt
+      become: true
+      apt:
+        force_apt_get: true
+        update_cache: true
+        state: present
+      tags:
+        - install
+        - core
+  tasks:
+    - include_tasks: tasks/apt.yml
+    - include_tasks: tasks/1Password.yml
+    - include_tasks: tasks/zsh.yml
+    - include_tasks: tasks/tmux-config.yml
