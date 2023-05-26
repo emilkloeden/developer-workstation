@@ -1,7 +1,50 @@
 ---
-- name: Install applications using apt
+- name: Add deadsnakes PPA
+  become: true
+  apt_repository:
+    repo: "ppa:deadsnakes/ppa"
+    state: present
+    update_cache: yes
+
+- name: Install Python 3.11
+  become: true
+  package:
+    name: python3.11
+    state: present
+
+# TODO: This is slow, speed it up by splitting up and only installing if not found
+- name: Install fzf
   become: true
   apt:
-    name: ["tmux", "fzf", "jq", "xclip", "googler"]
-  tags:
-    - install
+    name: fzf
+    state: present
+
+- name: Install jq
+  become: true
+  apt:
+    name: jq
+    state: present
+
+- name: Install xclip
+  become: true
+  apt:
+    name: xclip
+    state: present
+
+- name: Install python3-pip package
+  become: true
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Install python3-venv package
+  become: true
+  apt:
+    name: python3-venv
+    state: present
+# - name: Set Python 3.11 as default (this needs to happen after pip is installed for some reason)
+#   become: true
+#   alternatives:
+#     name: python
+#     path: /usr/bin/python3.11
+#     priority: 1

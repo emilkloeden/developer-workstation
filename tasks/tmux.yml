@@ -1,0 +1,19 @@
+- name: Install tmux from apt
+  become: true
+  apt:
+    name: tmux
+  tags:
+    - tmux
+    - install
+
+- name: Check if tpm already installed
+  stat:
+    path: "{{ lookup('env', 'HOME') }}/.tmux/plugins/tpm"
+  register: repo_stat
+  ignore_errors: true
+- name: Clone repository
+  git:
+    repo: "https://github.com/tmux-plugins/tpm"
+    dest: "{{ lookup('env', 'HOME') }}/.tmux/plugins/tpm"
+    version: master
+  when: not repo_stat.stat.exists

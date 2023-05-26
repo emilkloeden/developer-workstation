@@ -1,0 +1,8 @@
+- name: Check if Node.js is installed
+  command: node -v
+  register: node_version
+  ignore_errors: true
+
+- name: Install Node.js if it doesn't exist
+  shell: "curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - &&  sudo apt-get install -y nodejs"
+  when: node_version.rc != 0

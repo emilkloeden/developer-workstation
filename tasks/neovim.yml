@@ -1,0 +1,17 @@
+- name: Add neovim unstable PPA
+  become: true
+  ansible.builtin.apt_repository:
+    repo: ppa:neovim-ppa/unstable
+    state: present
+
+- name: Install neovim
+  become: true
+  ansible.builtin.apt:
+    name: neovim
+    state: latest
+
+- name: Install Personal kickstart.nvim
+  ansible.builtin.git:
+    repo: https://github.com/emilkloeden/kickstart.nvim.git
+    dest: "{{ lookup('env', 'HOME') }}/.config/nvim"
+  ignore_errors: true

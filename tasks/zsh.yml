@@ -9,3 +9,38 @@
   become: true
   shell: chsh -s $(which zsh) dockeruser
   tags: *tags_for_zsh_tasks
+
+- name: Remap exa to ls
+  lineinfile:
+    path: /home/dockeruser/.zshrc
+    line: "alias ls=exa"
+    owner: dockeruser
+    regexp: "^alias ls=exa$"
+    state: present
+    insertafter: EOF
+    create: True
+
+- name: alias nvim to vi
+  lineinfile:
+    path: /home/dockeruser/.zshrc
+    line: "alias vi=nvim"
+    owner: dockeruser
+    regexp: "^alias vi=nvim$"
+    state: present
+    insertafter: EOF
+    create: True
+
+- name: alias nvim to vim
+  lineinfile:
+    path: /home/dockeruser/.zshrc
+    line: "alias vim=nvim"
+    owner: dockeruser
+    regexp: "^alias vim=nvim$"
+    state: present
+    insertafter: EOF
+    create: True
+
+- name: Re-source .zshrc
+  shell: "source ~/.zshrc"
+  args:
+    executable: /bin/zsh

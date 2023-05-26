@@ -12,7 +12,6 @@ compinit
 # End of lines added by compinstall
 
 # aliases
-alias g="googler"
 
 autoload -Uz vcs_info
 precmd() { vcs_info }
@@ -21,3 +20,6 @@ zstyle ':vcs_info:git:*' formats '%b '
 
 setopt PROMPT_SUBST
 PROMPT='%F{green}%*%f %F{blue}%~%f %F{red}${vcs_info_msg_0_}%f$ '
+
+# This strips out a link from a markdown link assuming there is just one on a line
+function getlinks() { grep -oE "\[.*\](\(.*?\))" $1 | awk -F '(' '{print $NF }' | sed 's/.$//'; }
